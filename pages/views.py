@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,9 +12,8 @@ class StaffRequiredMixin(object):
     """
      Este mixin requerira que el usuario sea staff
     """
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            return redirect(reverse_lazy('admin:login'))
+    @method_decorator(staff_member_required)
+    def dispatch(self, *args, **kwargs):
         return super(StaffRequiredMixin, self).dispatch(*args,**kwargs)
     
 
@@ -23,14 +24,14 @@ class PageListView(ListView):
 class PageDetailView(DetailView):
     model = Page
 
-class PageCreateView(StaffRequiredMixin, CreateView):
+@method_decorator(staff_member_required, name="dispatch")
+class PageCreateView(CreateView):
     model = Page
     form_class = PageForm
     success_url = reverse_lazy('pages:pages') 
 
-
-
-class PageUpdate(StaffRequiredMixin, UpdateView):
+@method_decorator(staff_member_required, name="dispatch")
+class PageUpdate(UpdateView):
     model = Page
     form_class = PageForm
     template_name_suffix = '_update_form'
