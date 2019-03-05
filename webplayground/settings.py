@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 
 
 #auth redirect
-LOGIN_REDIRECT_URL = 'pages:pages'
+#LOGIN_REDIRECT_URL = 'pages:pages'
 LOGOUT_REDIRECT_URL = 'home'
 
 # Emails
@@ -135,4 +135,7 @@ if DEBUG:
 else:
     # Aquí hay que configurar un email real para producción
     pass
-    
+
+#media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
