@@ -7,6 +7,7 @@ from .models import Thread
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
+from django.http import JsonResponse
 
 # Create your views here.
 @method_decorator(login_required, name="dispatch")
@@ -29,3 +30,7 @@ class ThreadDetail(DetailView):
         if self.request.user not in obj.users.all():
             raise Http404()
         return obj
+
+def add_message(request,pk):
+    json_response = {'created': False}
+    return JsonResponse(json_response)
