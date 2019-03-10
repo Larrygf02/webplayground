@@ -76,6 +76,9 @@
                       message.innerHTML = '<small><i>Hace unos segundos</i></small><br>' + decodeURIComponent(content);
                       document.getElementById("thread").appendChild(message);
                       scrollBottomInThread();
+                      if (data.first) {
+                        window.location.href="{% url 'messenger:detail' thread.pk %}";
+                      }
                     }
                   })
                 }
